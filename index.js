@@ -9,6 +9,9 @@ const app = express();
 //Directorio publico
 app.use( express.static('public'));
 
+//Lectura y parseo del body usamos potsman
+app.use( express.json() );
+
 
 //Rutas
 app.use('/api/auth', require('./routes/auth') ); //todo lo que ./routes/auth lo va a habilitar en esta ruta /api/auth
