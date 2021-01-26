@@ -2,22 +2,35 @@
 
 //Esto linea es para que me muestre la ayuda y se lo coloco como valor por defecto a res
 const { response } = require('express');
-const Usuario = require('../models/Usuario')
+const Usuario = require('../models/Usuario');
 
 
 const crearUsuario = async( req, res = response ) => {
     // console.log(req.body)
-
     // const { name, email, password } = req.body;
+
+    const { email, password } = req.body;
+
+
     try {
+        let usuario = await Usuario.findOne({ email });
+
+        if ( usuario ) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'Un usuario ya existe con ese correo'
+            });
+            
+        }
         
-        const usuario = new Usuario( req.body );
+      usuario = new Usuario( req.body );
     
         await usuario.save();
     
         res.status(201).json({
             ok: true,
-            msg: 'registro',
+            uid: usuario.id,
+            name: usuario.name
         })
 
     } catch (error) {
