@@ -6,6 +6,8 @@ const { Router } = require('express');
 const { check } = require('express-validator'); //El check se encarga de validar un elemento en particular lo va a hacer uno a la ves
 const { crearUsuario, loginUsuario, revalidarToken } = require('../controllers/auth');
 const { validarCampos } = require( '../middlewares/validar-campos' );
+const { validarJWT } = require('../middlewares/validar-jwt');
+
 
 const router = Router();
 
@@ -28,11 +30,11 @@ router.post(
         check('email', 'El correo es obligatorio').isEmail(),
         check('password', 'debe de ser minimo 6 caracteres').isLength({ min:6 }),
         validarCampos
-    ],
+    ], 
     loginUsuario 
 );
 
-router.get('/renew', revalidarToken );
+router.get('/renew',validarJWT, revalidarToken );
 
 
 module.exports = router;    
