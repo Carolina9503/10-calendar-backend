@@ -25,6 +25,7 @@ app.use( express.json() );
 app.use('/api/auth', require('./routes/auth') ); //todo lo que ./routes/auth lo va a habilitar en esta ruta /api/auth
 //TODO: auth //crear, login, renew
 //TODO: CRUD: eventos
+app.use('/api/events', require('./routes/events'));
 
 
 
